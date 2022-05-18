@@ -13,7 +13,7 @@
             <plugin>
                 <groupId>com.github.kongchen</groupId>
                 <artifactId>swagger-maven-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.1.8</version>
                 <configuration>
                     <apiSources>
                       <apiSource>
@@ -51,6 +51,7 @@
                                     <json>/securityDefinitions.json</json>
                                 </securityDefinition>
                             </securityDefinitions>
+                            <outputFormats>json</outputFormats>
                         </apiSource>
                     </apiSources>
                 </configuration>
@@ -77,7 +78,147 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.gradle</groupId>
+                    <artifactId>gradle-enterprise-maven-extension</artifactId>
+                    <configuration>
+                        <gradleEnterprise xmlns="https://www.gradle.com/gradle-enterprise-maven-project">
+                            <plugins>
+                                <plugin>
+                                    <groupId>com.github.kongchen</groupId>
+                                    <artifactId>swagger-maven-plugin</artifactId>
+                                    <iteratedProperties>
+                                        <property>
+                                            <name>apiSources</name>
+                                            <iteratedProperties>
+                                                <property>
+                                                    <name>securityDefinitions</name>
+                                                    <inputs>
+                                                        <properties>
+                                                            <property>
+                                                                <name>name</name>
+                                                            </property>
+                                                            <property>
+                                                                <name>type</name>
+                                                            </property>
+                                                            <property>
+                                                                <name>in</name>
+                                                            </property>
+                                                            <property>
+                                                                <name>json</name>
+                                                            </property>
+                                                        </properties>
+                                                    </inputs>
+                                                </property>
+                                            </iteratedProperties>
+                                            <nestedProperties>
+                                                <property>
+                                                    <name>info</name>
+                                                    <inputs>
+                                                        <properties>
+                                                            <property>
+                                                                <name>description</name>
+                                                            </property>
+                                                            <property>
+                                                                <name>termsOfService</name>
+                                                            </property>
+                                                            <property>
+                                                                <name>title</name>
+                                                            </property>
+                                                            <property>
+                                                                <name>version</name>
+                                                            </property>
+                                                        </properties>
+                                                    </inputs>
+                                                    <nestedProperties>
+                                                        <property>
+                                                            <name>license</name>
+                                                            <inputs>
+                                                                <properties>
+                                                                    <property>
+                                                                        <name>name</name>
+                                                                    </property>
+                                                                    <property>
+                                                                        <name>url</name>
+                                                                    </property>
+                                                                </properties>
+                                                                <ignoredProperties>
+                                                                    <!-- No idea what this is or how to inspect it -->
+                                                                    <ignore>vendorExtensions</ignore>
+                                                                </ignoredProperties>
+                                                            </inputs>
+                                                        </property>
+                                                        <property>
+                                                            <name>Contact</name>
+                                                            <inputs>
+                                                                <properties>
+                                                                    <property>
+                                                                        <name>email</name>
+                                                                    </property>
+                                                                    <property>
+                                                                        <name>name</name>
+                                                                    </property>
+                                                                    <property>
+                                                                        <name>url</name>
+                                                                    </property>
+                                                                </properties>
+                                                            </inputs>
+                                                        </property>
+                                                    </nestedProperties>
+                                                </property>
+                                            </nestedProperties>
+                                            <inputs>
+                                                <properties>
+                                                    <property>
+                                                        <name>locations</name>
+                                                    </property>
+                                                    <property>
+                                                        <name>outputFormats</name>
+                                                    </property>
+                                                    <property>
+                                                        <name>springmvc</name>
+                                                    </property>
+                                                    <property>
+                                                        <name>templatePath</name>
+                                                    </property>
+                                                    <property>
+                                                        <name>apiModelPropertyAccessExclusions</name>
+                                                    </property>
+                                                    <property>
+                                                        <name>typesToSkip</name>
+                                                    </property>
+                                                    <property>
+                                                        <name>swaggerFileName</name>
+                                                    </property>
+                                                    <property>
+                                                        <name>attachSwaggerArtifact</name>
+                                                    </property>
+                                                </properties>
+                                                <ignoredProperties>
+                                                    <ignore>basePath</ignore>
+                                                </ignoredProperties>
+                                            </inputs>
+                                            <outputs>
+                                                <directories>
+                                                    <directory>
+                                                        <name>swaggerOutputDir</name>
+                                                        <path>generated</path>
+                                                    </directory>
+                                                </directories>
+                                            </outputs>
+                                        </property>
+                                    </iteratedProperties>
+                                </plugin>
+                            </plugins>
+                        </gradleEnterprise>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
     <dependencies>
         <dependency>
